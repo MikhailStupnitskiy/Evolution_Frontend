@@ -3,8 +3,21 @@ import { ROUTES } from "./modules/Routes";
 import { WelcomePage } from "./components/WelcomePage";
 import { MainPage } from "./components/MainPage"
 import { CardPage } from "./components/CardPage";
+import { useEffect } from 'react';
 
 function App() {
+
+  useEffect(() => {
+    if ((window as any).__Tauri__?.tauri) {
+      const { invoke } = (window as any).__Tauri__.tauri;
+      invoke('create')
+        .then((response: any) => console.log(response))
+        .catch((error: any) => console.log(error));
+    } else {
+      console.error("Tauri не инициализирован.");
+    }
+  }, []);
+
   return (
     <BrowserRouter>
     <Routes>

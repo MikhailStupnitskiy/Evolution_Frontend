@@ -1,34 +1,54 @@
 import { getCardsByName, getAllCards } from "../modules/ApiCards"; // Добавьте getAllProducts
 import { Cards } from "../modules/MyInterface";
 import "./MainPage.css";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_LABELS, ROUTES } from "../modules/Routes";
 import { OneCard } from "../components/OneCard";
 import { BreadCrumbs } from "../components/BreadCrumbs";
+import { useDispatch, useSelector } from "react-redux";
+import { setCardName, setFilteredCards  } from "../modules/searchSlice"; // Путь к файлу searchSlice
+import { RootState } from "../modules/store"; // Путь к файлу store
 
 export const MainPage = () => {
-    
-    const [cards, SetCards] = useState<Cards[]>([]);
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [name, setName] = useState('');
+
+    // Извлекаем данные из Redux
+    const { cardName, filteredCards } = useSelector((state: RootState) => state.search);
+    
+    // Состояние для отображения продуктов
+    const [cards, setCards] = useState<Cards[]>(filteredCards || []); // Изначально используем filteredProducts
     
     useEffect(() => {
-        getAllCards().then((result: { Cards: SetStateAction<Cards[]>; }) => {
-            SetCards(result.Cards);
-        });
-    }, []);
+        // Если фильтрованные продукты уже есть в Redux, их можно сразу отобразить
+        if (filteredCards.length > 0) {
+            setCards(filteredCards);
+        } else {
+            // Если нет фильтрованных продуктов, загружаем все
+            getAllCards().then((result) => {
+                setCards(result.Cards); // Заменяем на правильный тип данных
+            });
+        }
+    }, [filteredCards]); // Перезапускаем useEffect, если filteredProducts изменились
+
+    
 
     const onSubmitFinderHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Предотвращаем перезагрузку страницы
-        if (name) {
-            getCardsByName(name).then((result) => {
-                SetCards(result.Cards);
+        dispatch(setCardName(cardName));
+
+        if (cardName) {
+            getCardsByName(cardName).then((result) => {
+                setCards(result.Cards);
+                dispatch(setFilteredCards(result.Cards)); // Сохраняем отфильтрованные продукты в Redux
             });
         } else {
             // Если имя пустое, загружаем все товары
-            getAllCards().then((result: { Cards: SetStateAction<Cards[]>; }) => {
-                SetCards(result.Cards);
+            getAllCards().then((result) => {
+                setCards(result.Cards);
+                dispatch(setFilteredCards(result.Cards)); // Загружаем все продукты в Redux
             });
         }
     };
@@ -55,8 +75,8 @@ export const MainPage = () => {
                         size ={113} 
                         type="text" 
                         placeholder="Поиск..." 
-                        value={name}
-                        onChange={(e) => setName(e.target.value)} 
+                        value={cardName}
+                        onChange={(e) => dispatch(setCardName(e.target.value))}
                     /> 
                     <button type="submit">Поиск</button> {/* Кнопка поиска */}
                 </form>
