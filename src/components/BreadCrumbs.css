@@ -1,0 +1,47 @@
+
+:root {
+    --active_color: #c22; /* Яркий цвет для текущей страницы */
+    --additional_color: #c22; /* Цвет для пройденных страниц */
+    --separator_color: #c22; /* Цвет разделителя */
+  }
+  
+  .breadcrumbs {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-family: 'Century Gothic', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 20px;
+    align-items: center;
+  }
+  
+  .breadcrumbs li {
+    position: relative;
+    cursor: pointer;
+    color: var(--additional_color);
+    transition: color 0.3s ease;
+  }
+  
+  .breadcrumbs .slash {
+    color: var(--separator_color); /* Цвет разделителя */
+  }
+  
+  .breadcrumbs li:last-child {
+    color: var(--active_color); /* Цвет текущей страницы */
+    font-weight: bold; /* Жирный текст для выделения */
+  }
+  
+  .breadcrumbs li a {
+    color: var(--additional_color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .breadcrumbs li a:hover {
+    color: var(--active_color); /* При наведении пройденные страницы становятся активного цвета */
+  }

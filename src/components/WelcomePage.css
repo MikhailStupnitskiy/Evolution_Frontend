@@ -1,0 +1,98 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Didact+Gothic&display=swap');
+/**/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.changa-one{
+    font-family: 'Changa', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: bold;
+}
+
+
+body{
+    background: #F1F6E7;
+}
+
+.header {
+    background-color: #F1F6E7; 
+    height: 150px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    color: #054D1A;
+    width: 100%;
+}
+
+.space{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+
+.home-button{
+    width: 85px;
+    height: 115px;
+    background-image: url('http://localhost:9000/test/Home_logo.jpg');
+    background-size: cover; /* Изображение растягивается, чтобы покрыть всю кнопку */
+    background-position: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    margin-right: 20px;
+}
+
+button:hover {
+    background-color: #fff0f0;
+}
+
+.container{
+    background-color: #054D1A;
+    display: block;
+    gap: 20px;
+    min-height: 34vw;
+    justify-content: space-between;
+    /*align-content: space-around;*/
+    padding-left: 120px;
+    color: #F1F6E7; 
+    font-size: 28px;
+    font-family: 'Century Gothic';
+    font-weight: bold;
+}
+
+.description{
+    margin-top: 20px;
+}
+
+.to-home-button{
+    font-family: 'Century Gothic';
+    text-align: center;
+    padding: 2px; 
+    width: 250px;
+    border-radius: 15px;
+    border: 2px solid #054D1A;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 500;
+    display: block; /* Блоковый элемент, чтобы применилось margin */
+    margin-top: 10px;
+    color: #054D1A;
+    background-color: #F1F6E7;
+}

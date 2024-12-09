@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/**/
+
+.space{
+    cursor: auto;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button[name="home-button1"] {
+    border:none;
+    height: 120px;
+    width: 120px;
+    background-image: url("http://localhost:9000/development-internet-applications/mos_logo.png");
+    object-fit: cover;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 15px; /* Закругление углов у кнопки */
+    cursor: pointer; /* Изменяем курсор на указатель при наведении */
+    background-color: white;
+}
+
+button:hover {
+    background-color: #fff0f0;
+}
+
+
+.container1 {
+    background-color: #054D1A;
+    display: flex;
+    gap: 20px;
+    padding-left: 50px;
+    height: 100%;
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center;
+    min-height: 37vw;
+}
+
+
+.card1{
+    width: 919px;
+    height: 452px;
+    background-color: #F1F6E7;
+    display: flex;
+    border-radius: 15px;
+}
+
+.card-text1{
+    display: flex;
+    flex-direction: column;
+    padding-left: 45px;
+    justify-content: start;
+}
+
+.card-image-n-text1{
+    display: flex;
+    flex-direction: row;
+}
+
+.card-image1{
+    margin-left: 10px;
+    width: 213px;
+    margin-top: 20px;
+}
+
+.header1{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title-in-card1{
+    margin-top: 10px;
+    font-family: "Century Gothic";
+    font-size: 32px;
+    margin-left: 10px;
+}
+
+.short-description1{
+    font-family: 'Century Gothic';
+    text-align: center;
+    font-size: 32px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
