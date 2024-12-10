@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 /**/
 
+body{
+    background-color: #054D1A;
+}
+
 .space{
     cursor: auto;
     font-family: 'Montserrat', sans-serif;
@@ -8,9 +12,9 @@
 
 button[name="home-button1"] {
     border:none;
-    height: 120px;
+    height: 80px;
     width: 120px;
-    background-image: url("http://localhost:9000/development-internet-applications/mos_logo.png");
+    background-image: url("../assets/Home_logo.jpg");
     object-fit: cover;
     background-size: cover;
     background-position: center center;
@@ -42,6 +46,7 @@ button:hover {
     background-color: #F1F6E7;
     display: flex;
     border-radius: 15px;
+    margin-top: 10px;
 }
 
 .card-text1{
@@ -63,10 +68,11 @@ button:hover {
 }
 
 .header1{
-    margin: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    background-color: #F1F6E7;
+    width: 100%;
 }
 
 .title-in-card1{
@@ -83,4 +89,78 @@ button:hover {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+@media(max-width: 1400px){
+    
+    .card1 {
+        padding: 5%;
+        margin-right: 30px;
+        width: 60%;
+        height: 400px;
+        
+    }
+
+    .card-image1 {
+        height: 300px; /* Уменьшаем размер изображения */
+    }
+
+    .title-in-card1 {
+        font-size: 16px; /* Уменьшаем размер шрифта */
+        margin-bottom: 15px;
+    }
+
+    button[name="home-button"] {
+        height: 120px;
+        width: 120px;
+    }
+}
+
+@media(max-width: 760px){
+    .card-image1 {
+        height: 250px; /* Уменьшаем размер изображения */
+    }
+
+    .card1{
+        flex-direction: column; /* Переводим карточку в вертикальное положение */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-text1{
+        margin-top: 20px;
+        margin-left: -10px;
+    }
+}
+
+/* Медиа-запросы для экранов шириной до 480px (очень маленькие экраны, смартфоны) */
+@media (max-width: 470px) {
+
+    .MP_breadcrumbs1{
+        margin-left: -20px;
+        font-size: 10px;
+    }
+   
+    .card1 {
+        width: 90%;
+        flex-direction: column; /* Карточки вертикальные */
+        padding: 10px;
+        margin-left:5px;
+        margin-right:5x;
+    }
+
+    .card-image1 {
+        height: 215px; /* Уменьшаем картинку еще больше */
+    }
+
+    .title-in-card1 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    button[name="home-button2"] {
+        height: 70px;
+        width: 60px;
+        margin:5px;
+    }
 }

@@ -1,6 +1,5 @@
-
 import "./BreadCrumbs.css";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FC } from "react";
 import { ROUTES } from "../modules/Routes";
@@ -16,25 +15,33 @@ interface BreadCrumbsProps {
 
 export const BreadCrumbs: FC<BreadCrumbsProps> = (props) => {
   const { crumbs } = props;
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => setShowMenu(!showMenu);
 
   return (
-    <ul className="breadcrumbs">
-      <li>
-        <Link to={ROUTES.START}>Главная</Link>
-      </li>
-      {!!crumbs.length &&
-        crumbs.map((crumb, index) => (
-          <React.Fragment key={index}>
-            <li className="slash">/</li>
-            {index === crumbs.length - 1 ? (
-              <li>{crumb.label}</li>
-            ) : (
-              <li>
-                <Link to={crumb.path || ""}>{crumb.label}</Link>
-              </li>
-            )}
-          </React.Fragment>
-        ))}
-    </ul>
+    <div className="breadcrumbs-container">
+      <div className="burger-icon" onClick={toggleMenu}>
+        ☰
+      </div>
+      <ul className={`breadcrumbs ${showMenu ? "show" : ""}`}>
+        <li>
+          <Link to={ROUTES.START}>Главная</Link>
+        </li>
+        {!!crumbs.length &&
+          crumbs.map((crumb, index) => (
+            <React.Fragment key={index}>
+              {!showMenu && <li className="slash">/</li>} {/* Условный разделитель */}
+              {index === crumbs.length - 1 ? (
+                <li>{crumb.label}</li>
+              ) : (
+                <li>
+                  <Link to={crumb.path || ""}>{crumb.label}</Link>
+                </li>
+              )}
+            </React.Fragment>
+          ))}
+      </ul>
+    </div>
   );
 };

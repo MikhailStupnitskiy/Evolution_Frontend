@@ -61,7 +61,7 @@ export const MainPage = () => {
         <>
             <div className="header">
                 <Link to={ROUTES.START}>
-                    <button name="home-button"></button>
+                    <button name="home-button2"></button>
                 </Link>
                 <div className="MP_breadcrumbs">
                     <BreadCrumbs 
@@ -72,7 +72,6 @@ export const MainPage = () => {
             <div className="navigation_line">
                 <form onSubmit={onSubmitFinderHandler}> {/* Форма для поиска */}
                     <input className="search_field"
-                        size ={113} 
                         type="text" 
                         placeholder="Поиск..." 
                         value={cardName}

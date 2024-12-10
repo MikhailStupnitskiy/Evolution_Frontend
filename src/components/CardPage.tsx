@@ -5,6 +5,7 @@ import { getCardByID } from '../modules/ApiCards';
 import { Cards } from '../modules/MyInterface';
 import { Link, useParams } from 'react-router-dom';
 import { BreadCrumbs } from "../components/BreadCrumbs"
+import HomeLogo from '../assets/Home_logo.jpg';
 
 import "./CardPage.css";
 
@@ -30,7 +31,7 @@ export const CardPage: FC = () => {
     }, [id]);
 
     if (cardInfo?.image_url === undefined) {
-        image = 'http://localhost:9000/test/Home_logo.jpg';
+        image = HomeLogo;
     } else {
         image = cardInfo.image_url; // Исправлено с использованием шаблонной строки
     }
@@ -41,7 +42,7 @@ export const CardPage: FC = () => {
         <div className="space1">
             <div className="header1">
                 <Link to={ROUTES.START}>
-                    <button name="home-button"></button>
+                    <button name="home-button2"></button>
                 </Link>
                 <div className="MP_breadcrumbs1">
                     <BreadCrumbs 

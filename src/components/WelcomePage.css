@@ -96,3 +96,32 @@ button:hover {
     color: #054D1A;
     background-color: #F1F6E7;
 }
+
+@media (max-width: 550px) {
+
+    
+    /* Стилизуем элементы для экранов до 480px (смартфоны) */
+    h1 {
+        font-size: 40px; /* Еще меньше шрифт на маленьких экранах */
+    }
+
+    .container{
+        min-height: 35vw;
+    }
+
+    .description {
+        font-size: 18px;
+        margin-left: -25px;
+        width: 90%;
+    }
+
+    .to-home-button {
+        font-size: 16px; /* Уменьшаем шрифт еще больше */
+        padding: 6px 20px;
+        margin-left: -25px;
+    }
+
+    .space {
+        background-size: cover; /* Убедитесь, что изображение масштабируется */
+    }
+}

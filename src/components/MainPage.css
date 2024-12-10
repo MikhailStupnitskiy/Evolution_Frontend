@@ -47,7 +47,7 @@ body{
 }
 
 
-button[name = "home-button"]{
+button[name = "home-button2"]{
     width: 85px;
     height: 115px;
     background-image: url('http://localhost:9000/test/Home_logo.jpg');
@@ -147,6 +147,7 @@ button:hover {
     justify-content: space-between;
     align-content: center;
     margin-bottom: 10px;
+    width: 70%
 }
 
 .info{
@@ -204,6 +205,12 @@ button:hover {
     margin-bottom: 10px;
 }
 
+.search_field {
+    width: 750px; /* Занимает всю ширину родительского контейнера */
+    padding: 10px; /* Добавление внутренних отступов для удобства */
+    box-sizing: border-box; /* Учитывает внутренние отступы и рамки в общей ширине */
+}
+
 .card-button{
     font-family: 'Century Gothic';
     text-align: center;
@@ -218,4 +225,220 @@ button:hover {
     margin: 0 auto;
     color: #054D1A;
     /*margin-top: 5px;*/
+}
+
+@media (max-width: 1450px) {
+    .container-main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .image {
+        width: 50%;
+    }
+
+    .card {
+        width: 60%; /* Карточки занимают всю доступную ширину */
+        margin: 10px 0;
+        margin-left: 50px; /* Добавляем вертикальные отступы между карточками */
+    }
+
+    .search_field {
+        width: 600px; /* Занимает всю ширину родительского контейнера */
+        padding: 10px; /* Добавление внутренних отступов для удобства */
+        box-sizing: border-box; /* Учитывает внутренние отступы и рамки в общей ширине */
+    }
+}
+
+@media (max-width: 1250px) {
+    .container-main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .image {
+        width: 50%;
+    }
+
+    .card {
+        width: 80%; /* Карточки занимают всю доступную ширину */
+        margin: 10px 0;
+        margin-left: 20px; /* Добавляем вертикальные отступы между карточками */
+    }
+
+    .search_field {
+        width: 600px; /* Занимает всю ширину родительского контейнера */
+        padding: 10px; /* Добавление внутренних отступов для удобства */
+        box-sizing: border-box; /* Учитывает внутренние отступы и рамки в общей ширине */
+    }
+}
+
+@media(max-width: 765px){
+    .container-main {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        width: 100%;
+    }
+
+    .search_field {
+        width: 500px; /* Занимает всю ширину родительского контейнера */
+        padding: 10px; /* Добавление внутренних отступов для удобства */
+        box-sizing: border-box; /* Учитывает внутренние отступы и рамки в общей ширине */
+    }
+
+    .image {
+        width: 50%;
+    }
+
+    .card {
+        width: 65%; /* Карточки занимают всю доступную ширину */
+        margin: 10px 0;
+        margin-left: 40px; /* Добавляем вертикальные отступы между карточками */
+    }
+
+    .card-button {
+        font-size: 16px; /* Уменьшаем размер шрифта кнопки */
+        padding: 6px 10px; /* Уменьшаем отступы */
+    }
+}
+
+@media (max-width: 600px) {
+
+    .button{
+        margin: 0px;
+    }
+
+    .MP_breadcrumbs{
+        margin-left: -10px;
+    }
+    
+    .container-main {
+        grid-template-columns: 1fr; /* Одну карточку в колонке */
+        
+        margin-right: 10px; /* Уменьшаем отступ справа */
+        width: 100%;
+    }
+
+    /* Настройка карточек для мобильных устройств */
+    .card {
+        width: 95%; /* Карточки занимают всю доступную ширину */
+        margin: 10px 0;
+        margin-left: -35px; /* Добавляем вертикальные отступы между карточками */
+    }
+
+    /* Карточки могут занимать всю ширину, но изображения могут быть меньше */
+    .image {
+        width: 50%; /* Растягиваем изображение на всю ширину карточки */
+        height: auto; /* Сохраняем пропорции изображения */
+    }
+
+    /* Уменьшаем размер шрифта в карточках на мобильных устройствах */
+    .title-in-card {
+        font-size: 16px; /* Уменьшаем размер шрифта */
+    }
+
+    /* Кнопка в карточке */
+    .card-button {
+        font-size: 16px; /* Уменьшаем размер шрифта кнопки */
+        padding: 6px 10px; /* Уменьшаем отступы */
+    }
+
+    /* Поиск */
+    .navigation_line {
+        width: 100%;
+        margin-left: 0px; /* Уменьшаем отступ */
+        margin-right: 10px; /* Уменьшаем отступ */
+    }
+
+    .search_field {
+        font-size: 16px; /* Уменьшаем размер шрифта в поле поиска */
+        padding: 8px; /* Уменьшаем внутренние отступы */
+        width: 69%;
+    }
+
+    button[type="submit"] {
+        font-size: 16px; /* Уменьшаем размер шрифта кнопки поиска */
+        padding: 8px 10px; /* Уменьшаем отступы */
+    }
+}
+
+
+@media (max-width: 420px) {
+
+    .button{
+        margin: 0px;
+    }
+    /* Изменяем контейнер карточек для мобильных устройств */
+    .container-main {
+        grid-template-columns: 1fr; /* Одну карточку в колонке */
+        margin-left: 0px; /* Уменьшаем отступ слева */
+        width: 100%;
+    }
+
+    /* Настройка карточек для мобильных устройств */
+    .card {
+        width: 100%; /* Карточки занимают всю доступную ширину */
+        margin: 10px 10px;
+        margin-left: -60px;
+        height: 350px;
+         /* Добавляем вертикальные отступы между карточками */
+    }
+
+    /* Карточки могут занимать всю ширину, но изображения могут быть меньше */
+    .image {
+        width: 50%; /* Растягиваем изображение на всю ширину карточки */
+        height: auto; /* Сохраняем пропорции изображения */
+    }
+
+    /* Уменьшаем размер шрифта в карточках на мобильных устройствах */
+    .info {
+        margin-left: 15px;
+        margin-top: -5px;
+         /* Уменьшаем размер шрифта */
+    }
+
+
+    /* Кнопка в карточке */
+    .card-button {
+        font-size: 14px; /* Уменьшаем размер шрифта кнопки */
+        padding: 6px 10px; /* Уменьшаем отступы */
+        width: 100px;
+    }
+
+    .short-description {
+        font-size: 16px;
+    }
+
+    .multiplier {
+        font-size: 18px;
+    }
+
+    .title-en{
+        font-size: 16px;
+    }
+
+    .title-ru{
+        margin-top: -5px;
+        font-size: 16px;
+    }
+
+    /* Поиск */
+    .navigation_line {
+        width: 100%;
+        margin-left: 0px; /* Уменьшаем отступ */
+        margin-right: 10px; /* Уменьшаем отступ */
+    }
+
+    .search_field {
+        font-size: 16px; /* Уменьшаем размер шрифта в поле поиска */
+        padding: 8px; /* Уменьшаем внутренние отступы */
+        width: 69%;
+    }
+
+    
+
+    button[type="submit"] {
+        font-size: 16px; /* Уменьшаем размер шрифта кнопки поиска */
+        padding: 8px 10px; /* Уменьшаем отступы */
+    }
 }

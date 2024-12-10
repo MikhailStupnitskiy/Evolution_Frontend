@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { Cards } from "../modules/MyInterface"
 import "./MainPage.css"
+import HomeLogo1 from '../assets/Home_logo.jpg';
 
 interface OneCard {
     card : Cards,
@@ -12,7 +13,7 @@ export const OneCard : FC<OneCard> = ( {card, imageClickHandler} : OneCard) => {
     let image : string = ''
 
     if (card.image_url === undefined || card.image_url == "") {
-        image = "http://localhost:9000/test/Home_logo.jpg"
+        image = HomeLogo1;
     } else {
         image = card.image_url
     }
