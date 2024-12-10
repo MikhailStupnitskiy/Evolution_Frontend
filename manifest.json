@@ -1,0 +1,26 @@
+{
+    "name": "Evolution",
+    "short_name": "Evolution",
+    "start_url": "/Evolution_Frontend",
+    "display": "standalone",
+    "background_color": "#fdfdfd",
+    "theme_color": "#db4938",
+    "orientation": "portrait-primary",
+    "screenshots":[
+    {
+        "src": "/Evolution_Frontend/image.png",
+        "type": "image/png", "sizes": "1919x1079",
+        "form_factor": "wide"
+    },
+    {
+        "src": "/Evolution_Frontend/image.png",
+        "type": "image/png", "sizes": "1919x1079"
+    }
+    ],
+    "icons": [
+    {
+      "src": "/Evolution_Frontend/icon.png",
+      "type": "image/png", "sizes": "512x512"
+    }
+  ]
+  }
