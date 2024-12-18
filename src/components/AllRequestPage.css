@@ -1,0 +1,108 @@
+
+/* Основной контейнер страницы */
+.all-requests-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Блок с хедером */
+.header-backet {
+    margin-bottom: 20px;
+}
+
+/* Блок хлебных крошек */
+.breadcrumbs {
+    margin-bottom: 20px;
+}
+
+/* Стиль для контейнера таблицы заявок */
+.requests-table-container {
+    margin-top: 30px;
+    margin-left: 40px;
+    margin-right:40px;
+
+}
+
+/* Заголовок таблицы */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Таблица заявок */
+.requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для заголовков и ячеек таблицы */
+.requests-table th,
+.requests-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.requests-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+/* Чередование строк таблицы */
+.requests-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.requests-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Сообщение об ошибке */
+.error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Стили для блока с действиями */
+.actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Кнопка "Вернуться на главную" */
+.back-home-btn {
+    background-color: #054D1A; /* Изменен цвет кнопки */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.back-home-btn:hover {
+    background-color: #9a1e1e; /* Немного темнее при наведении */
+}
+
+/* Класс для улучшенной визуализации таблицы на мобильных устройствах */
+@media (max-width: 768px) {
+    .requests-table th, .requests-table td {
+        padding: 8px;
+    }
+
+    .requests-table {
+        font-size: 12px;
+    }
+    
+    .back-home-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}

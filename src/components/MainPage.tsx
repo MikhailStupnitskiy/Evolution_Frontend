@@ -9,6 +9,7 @@ import { BreadCrumbs } from "../components/BreadCrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { setCardName, setFilteredCards  } from "../modules/searchSlice"; // Путь к файлу searchSlice
 import { RootState } from "../modules/store"; // Путь к файлу store
+import { HeaderUni } from "./HeaderUni";
 
 export const MainPage = () => {
 
@@ -20,35 +21,71 @@ export const MainPage = () => {
     
     // Состояние для отображения продуктов
     const [cards, setCards] = useState<Cards[]>(filteredCards || []); // Изначально используем filteredProducts
+    const [moveID, setMoveID] = useState<number>(0);
+    const [CardsInMoveCount, setCardsInMoveCount] = useState<number>(0);
+
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem("token"));
+    const [login, setLogin] = useState<string>(localStorage.getItem("login") || "");
     
     useEffect(() => {
-        // Если фильтрованные продукты уже есть в Redux, их можно сразу отобразить
-        if (filteredCards.length > 0) {
-            setCards(filteredCards);
-        } else {
-            // Если нет фильтрованных продуктов, загружаем все
-            getAllCards().then((result) => {
-                setCards(result.Cards); // Заменяем на правильный тип данных
-            });
-        }
-    }, [filteredCards]); // Перезапускаем useEffect, если filteredProducts изменились
+        const fetchCards = async () => {
+            try {
+                // Если есть фильтрованные продукты, показываем их
+                if (filteredCards.length >= 0 && cardName !== "") {
+                    setCards(filteredCards);
+                } else {
+                    // Если фильтрованных продуктов нет, загружаем все продукты
+                    const result = await getAllCards();
+                    setCards(result.Cards);
+                    setMoveID(result.MoveID); // Устанавливаем MilkRequestID
+                    setCardsInMoveCount(result.CardsInMoveCount)
+                    console.log("result.MilkRequestID:", result.MoveID);
+                    console.log("milkRequestID после установки:", result.MoveID);
+                    console.log(result.CardsInMoveCount)
+                }
+            } catch (error) {
+                console.error("Ошибка при загрузке продуктов:", error);
+            }
+        };
 
+        fetchCards(); 
+    }, [filteredCards]); 
+
+    const checkAndUpdateMoveID = async () => {
+        if (moveID === 0) {
+            try {
+                const result = await getAllCards(); // Или другой API для обновления milkRequestID
+                setMoveID(result.MoveID);
+            } catch (error) {
+                console.error("Ошибка при обновлении moveID:", error);
+            }
+        }
+    };
     
 
     const onSubmitFinderHandler = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Предотвращаем перезагрузку страницы
+        event.preventDefault();
         dispatch(setCardName(cardName));
 
         if (cardName) {
             getCardsByName(cardName).then((result) => {
-                setCards(result.Cards);
-                dispatch(setFilteredCards(result.Cards)); // Сохраняем отфильтрованные продукты в Redux
+                const cards = result.Cards || [];
+                setCards(cards);
+                dispatch(setFilteredCards(cards));
+            }).catch(() => {
+                setCards([]);
+                dispatch(setFilteredCards([]));
             });
         } else {
-            // Если имя пустое, загружаем все товары
             getAllCards().then((result) => {
-                setCards(result.Cards);
-                dispatch(setFilteredCards(result.Cards)); // Загружаем все продукты в Redux
+                const allCards = result.Cards || [];
+                setCards(allCards);
+                setMoveID(result.MoveID); // Сохраняем MoveID
+                dispatch(setFilteredCards(allCards));
+            }).catch(() => {
+                setCards([]);
+                setMoveID(0); // Устанавливаем в 0 в случае ошибки
+                dispatch(setFilteredCards([]));
             });
         }
     };
@@ -57,12 +94,18 @@ export const MainPage = () => {
         navigate(`${ROUTES.HOME}/${id}`);
     };
 
+    
+
+    const handleCartButtonClick = () => {
+        if (moveID !== 0) {
+            navigate(`${ROUTES.BASKET}/${moveID}`);
+        }
+    };
+
     return (
         <>
-            <div className="header">
-                <Link to={ROUTES.START}>
-                    <button name="home-button2"></button>
-                </Link>
+            <div className="header-m">
+                <HeaderUni />
                 <div className="MP_breadcrumbs">
                     <BreadCrumbs 
                         crumbs={[{ label: ROUTE_LABELS.HOME}]} 
@@ -78,6 +121,14 @@ export const MainPage = () => {
                         onChange={(e) => dispatch(setCardName(e.target.value))}
                     /> 
                     <button type="submit">Поиск</button> {/* Кнопка поиска */}
+                    <button 
+                        className="button-def"
+                        type="button"
+                        disabled={moveID === 0} // Деактивация кнопки
+                        onClick={handleCartButtonClick} // Обработчик клика
+                    >
+                        Ход
+                    </button>
                 </form>
             </div>
             <div className="container-main">
@@ -86,6 +137,7 @@ export const MainPage = () => {
                         card={card} 
                         key={card.id} 
                         imageClickHandler={() => imageClickHandler(card.id)}
+                        checkAndUpdateMoveID={checkAndUpdateMoveID}
                     />
                 ))}  
             </div>

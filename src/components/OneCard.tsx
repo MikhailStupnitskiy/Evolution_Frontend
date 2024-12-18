@@ -6,6 +6,7 @@ import HomeLogo1 from '../assets/Home_logo.jpg';
 interface OneCard {
     card : Cards,
     imageClickHandler: () => void;
+    checkAndUpdateMoveID: () => Promise<void>;
 }
 
 export const OneCard : FC<OneCard> = ( {card, imageClickHandler} : OneCard) => {

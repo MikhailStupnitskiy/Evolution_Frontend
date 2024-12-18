@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Didact+Gothic&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.changa-one {
+    font-family: 'Changa', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: bold;
+}
+
+body {
+    background: #054D1A; /* Темно-зеленый фон для всей страницы */
+}
+
+.super-header {
+    background-color: #F1F6E7; /* Светлый фон для хедера */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    color: #054D1A;
+    width: 100%;
+}
+
+.space-reg {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+}
+
+.container-reg {
+    margin: 20px;
+    background-color: #F1F6E7; /* Светлый фон для контейнера */
+    border-radius: 20px;
+    width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container-header-reg {
+    text-align: center;
+    margin: 5px;
+    font-size: 20px;
+    color: #054D1A; /* Темный цвет для текста */
+}
+
+.h2-reg-to-auth {
+    color: #054D1A;
+    text-decoration: underline;
+    text-decoration-color: #054D1A;
+}
+
+.container-data-reg {
+    gap: 10px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-data-reg input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ccc; /* Удалены красные рамки, заменены на нейтральные */
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #F1F6E7; /* Светлый фон для полей */
+    color: #054D1A; /* Цвет текста полей */
+    font-family: 'Century Gothic', sans-serif;
+}
+
+.button-auth {
+    font-size: 20px;
+    border-radius: 10px;
+    margin: 0px;
+    width: 212px;
+    padding: 10px;
+    background-color: #F1F6E7; /* Светлый фон для кнопки */
+    color: #054D1A; /* Темно-зеленый текст для кнопки */
+    border: none;
+    cursor: pointer;
+    font-family: 'Century Gothic', sans-serif;
+}
+
+.button-auth:hover {
+    background-color: #A8D08D; /* Светлый оттенок при наведении */
+}
+
+.server-message {
+    font-size: 16px;
+    color: #DF0023;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Century Gothic', sans-serif;
+    font-size: 28px;
+    color: #F1F6E7; /* Светлый цвет для заголовков */
+}
+
+/* Мобильная версия */
+@media (max-width: 600px) {
+    .container-reg {
+        width: 90%;
+    }
+
+    .container-data-reg input {
+        font-size: 16px;
+    }
+
+    .button-auth {
+        font-size: 16px;
+        width: 100%;
+    }
+}

@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Didact+Gothic&display=swap');
+
+/* Общие стили для всех элементов */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Century Gothic', sans-serif;
+}
+
+/* Фон страницы */
+body {
+    background-color: #054D1A;
+}
+
+.change-pass-h1{
+    color: #F1F6E7;
+    margin-left: 20px;
+}
+
+/* Заголовок профиля */
+.header-backet {
+    background-color: #F1F6E7;
+    color: #054D1A;
+    font-family: 'Changa', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Форма смены пароля */
+.change-password-form {
+    background-color: #F1F6E7;
+    border: 2px solid #054D1A;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 400px;
+    margin: 50px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Поля ввода */
+.password-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #054D1A;
+    background-color: #F1F6E7;
+    border-radius: 15px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Кнопка смены пароля */
+.change-password-button {
+    background-color: #054D1A;
+    color: #F1F6E7;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.change-password-button:hover {
+    background-color: #DF0023;
+}
+
+/* Сообщения */
+.message {
+    color: #DF0023;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+    .change-password-form {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .header-profile {
+        font-size: 1.5rem;
+    }
+
+    .change-password-button {
+        font-size: 0.9rem;
+    }
+}

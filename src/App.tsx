@@ -3,6 +3,10 @@ import { ROUTES } from "./modules/Routes";
 import { WelcomePage } from "./components/WelcomePage";
 import { MainPage } from "./components/MainPage";
 import { CardPage } from "./components/CardPage";
+import { RegisterPage } from "./components/RegisterPage";
+import { AuthPage } from "./components/AuthPage";
+import { ProfilePage } from "./components/ProfilePage";
+import { AllRequestPage } from "./components/AllRequestPage";
 import { useEffect } from "react";
 
 function App() {
@@ -22,7 +26,11 @@ function App() {
         <Route path={ROUTES.START} index element={<WelcomePage />} />
         <Route path={ROUTES.HOME} index element={<MainPage />} />
         <Route path={`${ROUTES.HOME}/:id`} element={<CardPage />} />
-      </Routes>
+        <Route path={`${ROUTES.REGISTER}`} element={<RegisterPage />} />
+        <Route path={`${ROUTES.AUTHORIZATION}`} element={<AuthPage />} />
+        <Route path={`${ROUTES.PROFILE}`} element={<ProfilePage />} />
+        <Route path={`${ROUTES.REQUESTS}`} element={<AllRequestPage/>} />
+        </Routes>
     </BrowserRouter>
   );
 }

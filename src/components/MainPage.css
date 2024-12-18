@@ -27,11 +27,12 @@ body{
     background: #F1F6E7;
 }
 
-.header {
-    background-color: #F1F6E7; 
+.header-m {
+    background-color: #F1F6E7;
     height: 150px;
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Размещаем элементы по краям */
     padding: 0 20px;
     font-family: 'Century Gothic', sans-serif;
     font-weight: bold;
@@ -39,6 +40,17 @@ body{
     color: #054D1A;
     width: 100%;
 }
+
+.super-header-main {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Отступ между кнопками */
+}
+
+.MP_breadcrumbs {
+    margin-left: auto; /* Сдвигаем BreadCrumbs вправо */
+}
+
 
 .space{
     width: 100%;
@@ -196,7 +208,7 @@ button:hover {
 
 .short-description{
     font-family: 'Century Gothic';
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     width: 100%;
     max-height: 150px;

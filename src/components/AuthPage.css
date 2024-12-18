@@ -1,0 +1,123 @@
+
+.h2-auth-prods-auth{
+    color: #c22; /* Убрали margin-top */
+    font-size: 32px;
+    font-weight: 600;
+    margin-right: 60px;
+}
+
+/* Основной фон страницы */
+body {
+    background-color: #054D1A; /* Темно-зеленый фон для всей страницы */
+}
+
+/* Контейнер для всей страницы авторизации */
+.space-auth {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+}
+
+/* Хедер */
+.super-header {
+    background-color: #F1F6E7; /* Светлый фон для хедера */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    color: #054D1A;
+    width: 100%;
+}
+
+/* Контейнер для основной части */
+.container-auth {
+    margin: 20px;
+    background-color: #F1F6E7; /* Светлый фон для контейнера */
+    border-radius: 20px;
+    width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Заголовок внутри контейнера */
+.container-header-auth {
+    text-align: center;
+    margin: 5px;
+    font-size: 20px;
+    color: #054D1A;
+}
+
+/* Ссылка на регистрацию */
+.h2-auth-to-reg {
+    color: #054D1A;
+    text-decoration: underline;
+    text-decoration-color: #054D1A;
+}
+
+/* Основной контейнер для ввода данных */
+.container-data-auth {
+    gap: 10px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Стиль для полей ввода */
+.container-data-auth input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ccc; /* Удалены красные рамки */
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #F1F6E7; /* Светлый фон для полей */
+    color: #054D1A; /* Темно-зеленый текст в полях */
+    font-family: 'Century Gothic', sans-serif;
+}
+
+/* Стиль для кнопки авторизации */
+.button-auth {
+    font-size: 20px;
+    border-radius: 10px;
+    margin: 0px;
+    width: 212px;
+    padding: 10px;
+    background-color: #F1F6E7; /* Светлый фон для кнопки */
+    color: #054D1A; /* Темно-зеленый текст */
+    border: none;
+    cursor: pointer;
+    font-family: 'Century Gothic', sans-serif;
+}
+
+/* Стиль кнопки при наведении */
+.button-auth:hover {
+    background-color: #A8D08D; /* Светлый оттенок при наведении */
+}
+
+/* Сообщение об ошибке */
+.server-message {
+    font-size: 16px;
+    color: #DF0023;
+    text-align: center;
+}
+
+/* Адаптивный стиль для мобильных устройств */
+@media (max-width: 600px) {
+    .container-auth {
+        width: 90%;
+    }
+
+    .container-data-auth input {
+        font-size: 16px;
+    }
+
+    .button-auth {
+        font-size: 16px;
+        width: 100%;
+    }
+}
