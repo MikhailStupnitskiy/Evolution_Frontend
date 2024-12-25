@@ -1,3 +1,4 @@
+import { SchemasInfoForMove } from "../api/Api"
 
 export interface Cards {
 
@@ -30,21 +31,20 @@ export interface User {
 }
 
 export interface Move { 
-    ID: number;
-    Status: number;   
-	DateCreate:  string;
-	DateUpdate: string;
-	DateFinish: string;
-	CreatorID: number;    	
+    id: number;
+    status: number;   
+	date_create:  string;
+	date_update: string;
+	date_finish: string;
+	creator_id: number;    	
 	Creator: User;    
 	Moderator: User;   
-	Player: string;   
-	Stage: string;   
-	Cube: number;      
+	player: string;   
+	stage: string;   
+	cube: number;      
 }
 
 export interface MoveResponse {
-    Move: Move;
-    Count: number;
-    CardsMoves: Cards[];
+    move_cards?: SchemasInfoForMove[];
+    moves?: Record<string, any>;
 }

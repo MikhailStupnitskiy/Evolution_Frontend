@@ -7,6 +7,7 @@ import { RegisterPage } from "./components/RegisterPage";
 import { AuthPage } from "./components/AuthPage";
 import { ProfilePage } from "./components/ProfilePage";
 import { AllRequestPage } from "./components/AllRequestPage";
+import { BasketPage } from "./components/BasketPage"
 import { useEffect } from "react";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path={`${ROUTES.AUTHORIZATION}`} element={<AuthPage />} />
         <Route path={`${ROUTES.PROFILE}`} element={<ProfilePage />} />
         <Route path={`${ROUTES.REQUESTS}`} element={<AllRequestPage/>} />
+        <Route path={`${ROUTES.BASKET}/:id`} element={<BasketPage />} />
         </Routes>
     </BrowserRouter>
   );

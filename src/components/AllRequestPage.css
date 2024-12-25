@@ -1,19 +1,6 @@
 
 /* Основной контейнер страницы */
-.all-requests-page {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
 
-/* Блок с хедером */
-.header-backet {
-    margin-bottom: 20px;
-}
-
-/* Блок хлебных крошек */
-.breadcrumbs {
-    margin-bottom: 20px;
-}
 
 /* Стиль для контейнера таблицы заявок */
 .requests-table-container {
@@ -26,7 +13,7 @@
 /* Заголовок таблицы */
 h1 {
     font-size: 24px;
-    color: #333;
+    color: #F1F6E7;
     margin-bottom: 20px;
 }
 

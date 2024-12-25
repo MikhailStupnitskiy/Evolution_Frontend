@@ -21,25 +21,25 @@ export interface DsCards {
 }
 
 export interface DsMoves {
-  creator?: DsUsers;
-  creator_id?: number;
-  cube?: number;
-  date_create?: string;
-  date_finish?: string;
-  date_update?: string;
-  id?: number;
-  moderator?: DsUsers;
-  moderator_id?: number;
-  player?: string;
-  stage?: string;
-  status?: number;
+  creator: DsUsers;
+  creator_id: number;
+  cube: number;
+  date_create: string;
+  date_finish: string;
+  date_update: string;
+  id: number;
+  moderator: DsUsers;
+  moderator_id: number;
+  player: string;
+  stage: string;
+  status: number;
 }
 
 export interface DsUsers {
-  id?: number;
-  is_moderator?: boolean;
-  login?: string;
-  password?: string;
+  id: number;
+  is_moderator: boolean;
+  login: string;
+  password: string;
 }
 
 export interface SchemasAddCardToMoveResponse {
@@ -86,7 +86,7 @@ export interface SchemasGetAllCardsResponse {
 }
 
 export interface SchemasGetAllMovesWithParamsResponse {
-  moves?: DsMoves[];
+  Moves?: DsMoves[];
 }
 
 export interface SchemasGetCardResponse {
@@ -99,8 +99,8 @@ export interface SchemasGetMoveResponse {
 }
 
 export interface SchemasInfoForMove {
-  card?: DsCards;
-  food?: number;
+  card: DsCards;
+  food: number;
 }
 
 export interface SchemasLoginUserRequest {
@@ -397,15 +397,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     cardToMoveCreate: (
       id: string,
-      query?: {
-        id?: string;
-      },
       params: RequestParams = {},
     ) =>
       this.request<SchemasAddCardToMoveResponse, SchemasResponseMessage>({
         path: `/api/card_to_move/${id}`,
         method: "POST",
-        query: query,
         secure: true,
         type: ContentType.Json,
         format: "json",
@@ -499,19 +495,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     moveList: (
       query?: {
         /** Статус хода */
-        status?: string;
+        status?: number;
         /** Наличие статуса */
-        is_status?: string;
-        /**
-         * Дата от
-         * @format date
-         */
-        from_date?: string;
-        /**
-         * Дата до
-         * @format date
-         */
-        to_date?: string;
       },
       params: RequestParams = {},
     ) =>
@@ -534,7 +519,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request DELETE:/api/move/{ID}
      * @secure
      */
-    moveDelete: (id: string, params: RequestParams = {}) =>
+    moveDelete: (id: number, params: RequestParams = {}) =>
       this.request<string, SchemasResponseMessage>({
         path: `/api/move/${id}`,
         method: "DELETE",
@@ -612,7 +597,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/api/move/form/{ID}
      * @secure
      */
-    moveFormUpdate: (id: string, params: RequestParams = {}) =>
+    moveFormUpdate: (id: number, params: RequestParams = {}) =>
       this.request<string, SchemasResponseMessage>({
         path: `/api/move/form/${id}`,
         method: "PUT",

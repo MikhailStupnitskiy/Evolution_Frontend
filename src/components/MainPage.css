@@ -135,6 +135,41 @@ button:hover {
 
 }
 
+/* Стили для кнопки поиска */
+.button-def {
+    position: relative; /* Устанавливаем контекст позиционирования */
+    display: inline-block; /* Убедимся, что кнопка ведет себя как блок */
+    padding: 10px 20px; /* Добавляем внутренние отступы */
+    background: #F1F6E7;
+    border: 2px solid #054D1A;
+    border-radius: 15px;
+    font-size: 18px;
+    color: #054D1A;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Стили для значка с количеством */
+.card-count {
+    position: absolute;
+    top: 24px; /* Смещение вверх */
+    right: -8px; /* Смещение вправо */
+    width: 23px;
+    height: 23px;
+    background-color: #DF0023;
+    color: white;
+    font-family: 'Changa';
+    font-weight: bold;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .container-main {
     background-color: #054D1A;
     display: grid;

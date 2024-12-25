@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../modules/Routes";
 import { api } from '../api';  // Путь к сгенерированному Api
 import "./AuthPage.css";
+import { loginUser } from "../modules/thunks/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../modules/store";
 
 // Определяем тип данных ответа, который возвращается с сервера
 interface LoginUserResponse {
@@ -12,29 +15,23 @@ interface LoginUserResponse {
 export const AuthPage: FC = () => {
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  // Функция для обработки авторизации
-  const handleAuth = async () => {
-    try {
-      const response = await api.api.loginUserCreate({
-        login,
-        password,
-      });
-      const data = response.data as LoginUserResponse;
+  const { loading, error } = useSelector((state: RootState) => state.auth);
 
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('login', login); // пример записи после авторизации
+  const handleAuth = () => {
+    dispatch(loginUser({ login, password }))
+      .unwrap()
+      .then((data) => {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("login", login);
         navigate(ROUTES.HOME);
-      }
-    } catch (err: any) {
-      // Обрабатываем ошибку авторизации
-      if (err.response?.data?.error) {
-        setError(err.response.data.error); // Отображаем сообщение об ошибке
-      }
-    }
+      })
+      .catch(() => {
+        
+      });
   };
 
   return (

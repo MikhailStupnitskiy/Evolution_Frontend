@@ -2,7 +2,7 @@ import { getCardsByName, getAllCards } from "../modules/ApiCards"; // Добав
 import { Cards } from "../modules/MyInterface";
 import "./MainPage.css";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTE_LABELS, ROUTES } from "../modules/Routes";
 import { OneCard } from "../components/OneCard";
 import { BreadCrumbs } from "../components/BreadCrumbs";
@@ -24,6 +24,11 @@ export const MainPage = () => {
     const [moveID, setMoveID] = useState<number>(0);
     const [CardsInMoveCount, setCardsInMoveCount] = useState<number>(0);
 
+    const updateCardsInMoveCount = (newCount: number) => {
+        setCardsInMoveCount(newCount); // Обновляем состояние
+    };
+    
+
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem("token"));
     const [login, setLogin] = useState<string>(localStorage.getItem("login") || "");
     
@@ -37,11 +42,11 @@ export const MainPage = () => {
                     // Если фильтрованных продуктов нет, загружаем все продукты
                     const result = await getAllCards();
                     setCards(result.Cards);
-                    setMoveID(result.MoveID); // Устанавливаем MilkRequestID
+                    setMoveID(result.MoveID);
                     setCardsInMoveCount(result.CardsInMoveCount)
                     console.log("result.MilkRequestID:", result.MoveID);
                     console.log("milkRequestID после установки:", result.MoveID);
-                    console.log(result.CardsInMoveCount)
+                    console.log(result.CardsInMoveCount, setLogin(login), setIsAuthenticated(isAuthenticated))
                 }
             } catch (error) {
                 console.error("Ошибка при загрузке продуктов:", error);
@@ -52,13 +57,14 @@ export const MainPage = () => {
     }, [filteredCards]); 
 
     const checkAndUpdateMoveID = async () => {
-        if (moveID === 0) {
-            try {
-                const result = await getAllCards(); // Или другой API для обновления milkRequestID
-                setMoveID(result.MoveID);
-            } catch (error) {
-                console.error("Ошибка при обновлении moveID:", error);
-            }
+        try {
+            const result = await getAllCards(); // Или другой API для обновления milkRequestID
+            setMoveID(result.MoveID);
+            setCardsInMoveCount(result.CardsInMoveCount)
+            
+            console.log("AAAAA");
+        } catch (error) {
+            console.error("Ошибка при обновлении moveID:", error);
         }
     };
     
@@ -120,7 +126,8 @@ export const MainPage = () => {
                         value={cardName}
                         onChange={(e) => dispatch(setCardName(e.target.value))}
                     /> 
-                    <button type="submit">Поиск</button> {/* Кнопка поиска */}
+                    <button type="submit">Поиск
+                    </button> {/* Кнопка поиска */}
                     <button 
                         className="button-def"
                         type="button"
@@ -128,6 +135,7 @@ export const MainPage = () => {
                         onClick={handleCartButtonClick} // Обработчик клика
                     >
                         Ход
+                        <span className="card-count">{CardsInMoveCount}</span>
                     </button>
                 </form>
             </div>
@@ -138,6 +146,7 @@ export const MainPage = () => {
                         key={card.id} 
                         imageClickHandler={() => imageClickHandler(card.id)}
                         checkAndUpdateMoveID={checkAndUpdateMoveID}
+                        updateCardsInMoveCount={updateCardsInMoveCount}
                     />
                 ))}  
             </div>

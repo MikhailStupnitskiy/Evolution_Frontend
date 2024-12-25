@@ -2,6 +2,8 @@
 import { Cards, ApiResponse, ApiResponseGetAllCards } from "./MyInterface";
 import { MOCK_DATA_CARDS } from "./MockDataCards";
 import { api } from '../api';  // Путь к сгенерированному Api
+import { MoveResponse, Move } from "./MyInterface";
+import { SchemasInfoForMove } from "../api/Api";
 
 export const getCardsByName = async (name: string): Promise<ApiResponse> => {
     try {
@@ -64,6 +66,22 @@ export const getAllCards = async (): Promise<ApiResponseGetAllCards> => {
     }
 };
 
+function toMove(moveData?: Record<string, any>): Move {
+    return {
+        id: moveData?.id,
+        status: moveData?.status,
+        date_create: moveData?.date_create,
+        date_update: moveData?.date_update,
+        date_finish: moveData?.date_finish,
+        creator_id: moveData?.creator_id,
+        Creator: moveData?.Creator,
+        Moderator: moveData?.Moderator,
+        player: moveData?.player,
+        stage: moveData?.stage,
+        cube: moveData?.cube,
+    };
+}
+
 export const getMoveByID = async (id: number): Promise<MoveResponse | null> => {
     const token = localStorage.getItem("token"); // Получение токена из localStorage
     if (!token) {
@@ -82,9 +100,11 @@ export const getMoveByID = async (id: number): Promise<MoveResponse | null> => {
         // Проверка наличия данных в ответе
         if (response.data) {
             return {
-                MilkRequest: adaptMilkRequest(response.data["milk_requests"]), // Адаптация данных
-                count: response.data["count"],
-                MilkRequesMeals: response.data["milk_request_meals"],
+                moves: toMove(response.data.moves)    || {}, // Убедиться, что "moves" существует
+                move_cards: response.data.move_cards?.map((item: SchemasInfoForMove) => ({
+                    card: item.card || {},
+                    food: item.food || 0,
+                })) || [], // Преобразование move_cards в требуемую структуру
             };
         } else {
             console.error("Данные отсутствуют в ответе.");

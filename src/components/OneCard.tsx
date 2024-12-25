@@ -1,23 +1,44 @@
 import { FC } from "react"
 import { Cards } from "../modules/MyInterface"
 import "./MainPage.css"
-import HomeLogo1 from '../assets/Home_logo.jpg';
+import { useDispatch } from 'react-redux'; // Используем useDispatch для получения функции dispatch
+import { addCardToMove } from "../modules/thunks/AddToMove"; // Импорт вашего thunks
 
 interface OneCard {
     card : Cards,
     imageClickHandler: () => void;
     checkAndUpdateMoveID: () => Promise<void>;
+    updateCardsInMoveCount: (newCount: number) => void; // Новая функция
 }
 
-export const OneCard : FC<OneCard> = ( {card, imageClickHandler} : OneCard) => {
+export const OneCard : FC<OneCard> = ( {card, imageClickHandler, checkAndUpdateMoveID} : OneCard) => {
 
-    let image : string = ''
+    const token = localStorage.getItem("token");
+    const dispatch = useDispatch(); // Используем useDispatch для получения функции dispatch
 
-    if (card.image_url === undefined || card.image_url == "") {
-        image = HomeLogo1;
-    } else {
-        image = card.image_url
-    }
+    const handleAddCard = async () => {
+        if (!token) {
+            console.error("Токен отсутствует");
+            return;
+        }
+    
+        try {
+            // Ждем завершения добавления карты
+            //@ts-ignore
+            const response = await dispatch(addCardToMove({ cardId: card.id, token }));
+    
+            if (addCardToMove.fulfilled.match(response)) {
+                console.log("Карта успешно добавлена в запрос", response.payload);
+                // После успешного добавления обновляем moveID
+                await checkAndUpdateMoveID();
+            } else {
+                console.error("Ошибка при добавлении карты:", response.payload);
+            }
+        } catch (err) {
+            console.error("Произошла ошибка при добавлении карты:", err);
+        }
+    };
+    
 
 
     return (
@@ -28,10 +49,13 @@ export const OneCard : FC<OneCard> = ( {card, imageClickHandler} : OneCard) => {
                 <p className="title-en">{card.title_en}</p>
             </div>
             <p className="title-ru">{card.title_ru}</p>
-            <img src={image} className="image"></img>
+            <img src={card.image_url || "Home_logo.jpg"} className="image"></img>
             <p className="short-description">{card.description}</p>
             <div className="buttons-in-card">
-                <button onClick={() => imageClickHandler()} className="card-button">Подробнее</button> 
+                <button onClick={() => imageClickHandler()} className="card-button">Подробнее</button>
+                {token && (
+                        <button onClick={handleAddCard} className="card-button" type="button">+</button>
+                    )} 
             </div>
         </div>
 

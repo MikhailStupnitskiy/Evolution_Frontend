@@ -21,7 +21,7 @@ export const AllRequestPage = () => {
             if (token) {
                 // Отправляем запрос с Bearer токеном и статусом 7 в query параметре
                 const response = await api.api.moveList(
-                    { status: "7" }, // Передаем статус 7 в query
+                    { status: 0 }, 
                     {
                         headers: {
                             Authorization: `Bearer ${token}`, // Используем Bearer Auth
@@ -29,7 +29,7 @@ export const AllRequestPage = () => {
                     }
                 );
                 console.log(response)
-                const Moves = response.data["moves"] || []; // Используем пустой массив по умолчанию
+                const Moves = response.data["Moves"] || []; // Используем пустой массив по умолчанию
                 console.log(Moves)
                 setRequests(Moves);  
             } else {
@@ -64,14 +64,14 @@ export const AllRequestPage = () => {
     return (
         <div className="all-requests-page">
             
-            <div className="header-backet">
+            <div className="header-m">
                 <HeaderUni />
-            </div>
-
-
-            <div className="breadcrumbs">
-                <BreadCrumbs crumbs={[{ label: "Заявки" }]} />
-            </div>
+                <div className="MP_breadcrumbs">
+                    <BreadCrumbs 
+                        crumbs={[{ label: "Заявки"}]} 
+                    />
+                </div>
+            </div> 
 
             <div className="requests-table-container">
                 <h1>Список заявок</h1>
