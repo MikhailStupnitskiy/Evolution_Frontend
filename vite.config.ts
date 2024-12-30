@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: "/Evolution_Frontend",
   server: { 
+    host: true,
     port: 3000,
     proxy: {
       "/api": {

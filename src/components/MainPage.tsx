@@ -32,29 +32,59 @@ export const MainPage = () => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem("token"));
     const [login, setLogin] = useState<string>(localStorage.getItem("login") || "");
     
+
+    useEffect(() => {
+        const isPageReloaded = sessionStorage.getItem("pageReloaded");
+
+        if (isPageReloaded) {
+            // Reset authentication on page reload
+            localStorage.removeItem("token");
+            localStorage.removeItem("login");
+            setIsAuthenticated(false);
+            setLogin("");
+            sessionStorage.removeItem("pageReloaded");
+        } else {
+            // Check for token on initial page load
+            const token = localStorage.getItem("token");
+            const savedLogin = localStorage.getItem("login");
+
+            if (token && savedLogin) {
+                setIsAuthenticated(true);
+                setLogin(savedLogin);
+            }
+        }
+    }, []);
+    
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            sessionStorage.setItem("pageReloaded", "true");
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+
     useEffect(() => {
         const fetchCards = async () => {
             try {
-                // Если есть фильтрованные продукты, показываем их
                 if (filteredCards.length >= 0 && cardName !== "") {
                     setCards(filteredCards);
                 } else {
-                    // Если фильтрованных продуктов нет, загружаем все продукты
                     const result = await getAllCards();
                     setCards(result.Cards);
                     setMoveID(result.MoveID);
-                    setCardsInMoveCount(result.CardsInMoveCount)
-                    console.log("result.MilkRequestID:", result.MoveID);
-                    console.log("milkRequestID после установки:", result.MoveID);
-                    console.log(result.CardsInMoveCount, setLogin(login), setIsAuthenticated(isAuthenticated))
+                    setCardsInMoveCount(result.CardsInMoveCount);
+                    console.log("result.MoveID:", result.MoveID);
                 }
             } catch (error) {
-                console.error("Ошибка при загрузке продуктов:", error);
+                console.error("Ошибка при загрузке карт:", error);
             }
         };
 
-        fetchCards(); 
-    }, [filteredCards]); 
+        fetchCards();
+    }, [filteredCards]);
 
     const checkAndUpdateMoveID = async () => {
         try {

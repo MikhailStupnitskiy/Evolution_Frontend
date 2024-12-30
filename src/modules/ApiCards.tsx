@@ -68,17 +68,17 @@ export const getAllCards = async (): Promise<ApiResponseGetAllCards> => {
 
 function toMove(moveData?: Record<string, any>): Move {
     return {
-        id: moveData?.id,
-        status: moveData?.status,
-        date_create: moveData?.date_create,
-        date_update: moveData?.date_update,
-        date_finish: moveData?.date_finish,
-        creator_id: moveData?.creator_id,
-        Creator: moveData?.Creator,
+        id: moveData?.ID,
+        status: moveData?.Status,
+        date_create: moveData?.DateCreate,
+        date_update: moveData?.DateUpdate,
+        date_finish: moveData?.DateFinish,
+        creator_id: moveData?.CreatorID,
+        Creator: moveData?.CreatorLogin,
         Moderator: moveData?.Moderator,
-        player: moveData?.player,
-        stage: moveData?.stage,
-        cube: moveData?.cube,
+        player: moveData?.Player,
+        stage: moveData?.Stage,
+        cube: moveData?.Cube,
     };
 }
 
@@ -97,10 +97,13 @@ export const getMoveByID = async (id: number): Promise<MoveResponse | null> => {
             },
         });
 
+        console.log(response.data.moves)
         // Проверка наличия данных в ответе
         if (response.data) {
             return {
                 moves: toMove(response.data.moves)    || {}, // Убедиться, что "moves" существует
+                
+                status: response.data.status,
                 move_cards: response.data.move_cards?.map((item: SchemasInfoForMove) => ({
                     card: item.card || {},
                     food: item.food || 0,

@@ -27,15 +27,14 @@ export const WelcomePage = () => {
                     <Link to={ROUTES.START}>
                         <button className="home-button"></button>
                     </Link>
-                    <h1 className="Evo">EVOLUTION</h1>
+                    <Link to={ROUTES.HOME}>
+                        <h1 className="Evo">EVOLUTION</h1>
+                    </Link>
                 </header>
                 <div className="container">
                     <p className="description">
                         {replaceNewlines(descriptionText)}
                     </p>
-                    <Link to={ROUTES.HOME}>
-                        <button className="to-home-button">Просмотр карт</button>
-                    </Link>
                 </div>
             </div>
         </>

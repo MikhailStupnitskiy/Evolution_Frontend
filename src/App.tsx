@@ -7,7 +7,7 @@ import { RegisterPage } from "./components/RegisterPage";
 import { AuthPage } from "./components/AuthPage";
 import { ProfilePage } from "./components/ProfilePage";
 import { AllRequestPage } from "./components/AllRequestPage";
-import { BasketPage } from "./components/BasketPage"
+import { BasketPage } from "./components/MovePage"
 import { useEffect } from "react";
 
 function App() {

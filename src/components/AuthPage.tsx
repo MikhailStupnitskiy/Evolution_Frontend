@@ -1,16 +1,12 @@
 import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../modules/Routes";
-import { api } from '../api';  // Путь к сгенерированному Api
 import "./AuthPage.css";
 import { loginUser } from "../modules/thunks/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../modules/store";
 
 // Определяем тип данных ответа, который возвращается с сервера
-interface LoginUserResponse {
-  token: string;
-}
 
 export const AuthPage: FC = () => {
   const [login, setLogin] = useState<string>("");
@@ -28,6 +24,7 @@ export const AuthPage: FC = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("login", login);
         navigate(ROUTES.HOME);
+        console.log(loading)
       })
       .catch(() => {
         

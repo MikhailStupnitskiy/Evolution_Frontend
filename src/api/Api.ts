@@ -95,7 +95,8 @@ export interface SchemasGetCardResponse {
 
 export interface SchemasGetMoveResponse {
   move_cards?: SchemasInfoForMove[];
-  moves?: Record<string, any>;
+  status: number,
+  moves: Record<string, any>;
 }
 
 export interface SchemasInfoForMove {

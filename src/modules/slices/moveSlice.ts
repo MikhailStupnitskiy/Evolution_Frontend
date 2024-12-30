@@ -1,18 +1,20 @@
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getMoveByID } from "../../modules/ApiCards"; // Подключаем вашу функцию
-import { MoveResponse } from "../../modules/MyInterface";
+import { createSlice, createAsyncThunk, PayloadAction  } from "@reduxjs/toolkit";
+import { getMoveByID } from "../ApiCards"; // Подключаем вашу функцию
+import { MoveResponse } from "../MyInterface";
 import { api } from "../../api";
 import { SchemasDeleteCardFromMoveRequest } from "../../api/Api";
 
 export interface BasketState {
     basketData: MoveResponse | null;
+    selectedStage: string;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: BasketState = {
     basketData: null,
+    selectedStage: "",
     loading: false,
     error: null,
 };
@@ -25,6 +27,8 @@ export const fetchBasketData = createAsyncThunk<
 >("basket/fetchBasketData", async (id, { rejectWithValue }) => {
     try {
         const data = await getMoveByID(id); // Используем вашу функцию
+        console.log(data)
+        
         if (!data) {
             return rejectWithValue("Не удалось загрузить данные корзины");
         }
@@ -132,10 +136,47 @@ export const deleteCardFromBasket = createAsyncThunk<
     }
 });
 
+
+export const updateMoveStage = createAsyncThunk<
+    { moveId: string; stage: string },
+    { moveId: string; stage: string },
+    { rejectValue: string }
+>(
+    "basket/updateMoveStage",
+    async ({ moveId, stage }, { rejectWithValue }) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            return rejectWithValue("Токен не найден.");
+        }
+
+        try {
+            const response = await api.api.moveUpdate(moveId, {stage}, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.status === 200) {
+                return { moveId, stage };
+            } else {
+                console.error("Ошибка при обновлении стадии:", response);
+                return rejectWithValue("Ошибка при обновлении стадии.");
+            }
+        } catch (error) {
+            console.error("Ошибка при обновлении стадии:", error);
+            return rejectWithValue("Ошибка сервера при обновлении стадии.");
+        }
+    }
+);
+
+
+
 const basketSlice = createSlice({
     name: "basket",
     initialState,
-    reducers: {},
+    reducers: {
+        setSelectedStage(state, action: PayloadAction<string>) {
+            state.selectedStage = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchBasketData.pending, (state) => {
@@ -145,6 +186,7 @@ const basketSlice = createSlice({
             .addCase(fetchBasketData.fulfilled, (state, action) => {
                 state.loading = false;
                 state.basketData = action.payload;
+                console.log(state.basketData)
             })
             .addCase(fetchBasketData.rejected, (state, action) => {
                 state.loading = false;
@@ -156,6 +198,17 @@ const basketSlice = createSlice({
             .addCase(deleteBasket.rejected, (state, action) => {
                 state.error = action.payload || "Ошибка при удалении заявки";
             })
+
+            .addCase(updateMoveStage.fulfilled, (state, action) => {
+                if (state.basketData) {
+                    state.basketData.stage = action.payload.stage; // Обновляем стадию в состоянии
+                    state.selectedStage = action.payload.stage || "";
+                    }
+            })
+            .addCase(updateMoveStage.rejected, (state, action) => {
+                state.error = action.payload || "Ошибка при обновлении стадии.";
+            })
+            
 
             .addCase(updateFoodMoveCard.fulfilled, (state, action) => {
                 if (state.basketData) {
@@ -181,4 +234,6 @@ const basketSlice = createSlice({
     },
 });
 
+
+export const { setSelectedStage } = basketSlice.actions;
 export default basketSlice.reducer;

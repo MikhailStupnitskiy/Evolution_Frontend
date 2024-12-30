@@ -1,95 +1,65 @@
-
 /* Основной контейнер страницы */
-
-
-/* Стиль для контейнера таблицы заявок */
-.requests-table-container {
-    margin-top: 30px;
-    margin-left: 40px;
-    margin-right:40px;
-
+.requests-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
 }
 
-/* Заголовок таблицы */
-h1 {
-    font-size: 24px;
-    color: #F1F6E7;
-    margin-bottom: 20px;
+/* Стиль для карточки заявки */
+.request-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #F1F6E7;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Таблица заявок */
-.requests-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Равномерное распределение данных */
+.request-info {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Стили для заголовков и ячеек таблицы */
-.requests-table th,
-.requests-table td {
-    padding: 12px 15px;
+/* Индекс заявки */
+.request-index {
+    flex: 0 0 5%; /* Фиксированная ширина для индекса */
     text-align: center;
-    border: 1px solid #ddd;
-    font-size: 14px;
-}
-
-.requests-table th {
-    background-color: #f2f2f2;
-    color: #333;
-}
-
-/* Чередование строк таблицы */
-.requests-table tr:nth-child(even) {
-    background-color: #fafafa;
-}
-
-.requests-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Сообщение об ошибке */
-.error-message {
-    color: red;
+    font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
+    color: #6c757d;
 }
 
-/* Стили для блока с действиями */
-.actions {
-    margin-top: 30px;
+/* Информация о заявке */
+.request-details {
+    flex: 1; /* Равномерное распределение оставшегося пространства */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Статус заявки */
+.request-status {
+    flex: 1;
+    font-size: 1.2rem;
+    color: #343a40;
+    margin: 0;
     text-align: center;
 }
 
-/* Кнопка "Вернуться на главную" */
 .back-home-btn {
     background-color: #054D1A; /* Изменен цвет кнопки */
-    color: white;
+    color: #F1F6E7;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
+    font-weight: bold;
     display: inline-block;
     transition: background-color 0.3s ease;
-}
-
-.back-home-btn:hover {
-    background-color: #9a1e1e; /* Немного темнее при наведении */
-}
-
-/* Класс для улучшенной визуализации таблицы на мобильных устройствах */
-@media (max-width: 768px) {
-    .requests-table th, .requests-table td {
-        padding: 8px;
-    }
-
-    .requests-table {
-        font-size: 12px;
-    }
-    
-    .back-home-btn {
-        padding: 8px 15px;
-        font-size: 14px;
-    }
 }

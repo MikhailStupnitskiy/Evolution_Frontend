@@ -39,7 +39,7 @@ export const HeaderUni: FC = () => {
                 {/* Кнопка "Мои заявки" отображается только если пользователь авторизован */}
                 {isAuthenticated && (
                     <Link to={ROUTES.REQUESTS} className="no-underline">
-                        <button className="profile-button">Мои заявки</button>
+                        <button className="profile-button">Мои ходы</button>
                     </Link>
                 )}
 

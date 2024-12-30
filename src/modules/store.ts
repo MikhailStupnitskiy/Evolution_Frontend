@@ -3,7 +3,7 @@ import searchReducer from "../modules/searchSlice"; // Импортируйте 
 import { authReducer } from "./slices/authSlice";
 import {regReducer} from "./slices/regSlice"
 import { requestsReducer } from "./slices/allReqsSlice";
-import basketReducer from "./slices/basketSlice";
+import basketReducer from "./slices/moveSlice";
 
 export const store = configureStore({
     reducer: {

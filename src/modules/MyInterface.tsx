@@ -46,5 +46,6 @@ export interface Move {
 
 export interface MoveResponse {
     move_cards?: SchemasInfoForMove[];
-    moves?: Record<string, any>;
+    status: number;
+    moves: Record<string, any>;
 }

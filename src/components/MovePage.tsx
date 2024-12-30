@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./AuthPage.css";
-import "./BasketPage.css"; // Подключаем стили корзины
+import "./MovePage.css"; // Подключаем стили корзины
 import { HeaderUni } from "./HeaderUni";
-import { BreadCrumbs } from "../components/BreadCrumbs";
+import { BreadCrumbs } from "./BreadCrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { ROUTES } from "../modules/Routes";
 import { RootState } from "../modules/store";
@@ -13,17 +13,17 @@ import {
     deleteBasket,
     deleteCardFromBasket,
     updateFoodMoveCard,
+    updateMoveStage,
      // Новое асинхронное действие для обновления этапа
-} from "../modules/slices/basketSlice";
-import type { AppDispatch } from '../modules/store';
+} from "../modules/slices/moveSlice";
+import type { store } from '../modules/store';
 
 export const BasketPage: FC = () => {
     const { id } = useParams<{ id: string }>();
+    type AppDispatch = typeof store.dispatch;
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
     const { basketData, loading, error } = useSelector((state: RootState) => state.basket);
     
-    // Состояние для выбранного этапа
     const [selectedStage, setSelectedStage] = useState<string>("");
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export const BasketPage: FC = () => {
     }, [id, dispatch]);
 
     const handleConfirm = () => {
-        if (id) dispatch(confirmBasket(Number(id)));
+        if (selectedStage != "" && id) dispatch(confirmBasket(Number(id)));
     };
 
     const handleDeleteBasket = () => {
@@ -56,6 +56,17 @@ export const BasketPage: FC = () => {
         }
     };
 
+    const handleStageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const newStage = event.target.value;
+        setSelectedStage(newStage);
+
+        if (id && newStage !== "Выберите..") {
+            dispatch(updateMoveStage({ moveId: id, stage: newStage }));
+        }
+    };
+
+    const Status = basketData?.status
+
     if (loading) {
         return <div>Загрузка данных...</div>;
     }
@@ -75,18 +86,27 @@ export const BasketPage: FC = () => {
                 </div>
             </div> 
             <div className="container-basket">
-                {/* Выпадающее меню для выбора этапа */}
-                <div className="stage-dropdown">
-                    <label htmlFor="stage-select">Выберите этап:</label>
-                    <select
-                        id="stage-select"
-                    >
-                        <option value="Развитие">Развитие</option>
-                        <option value="Питание">Питание</option>
-                        <option value="Вымирание">Вымирание</option>
-                    </select>
-                </div>
-
+                {!Status && (
+                    <div className="stage-dropdown">
+                        <label htmlFor="stage-select">Выберите этап:</label>
+                        <select
+                            id="stage-select"
+                            value={selectedStage}
+                            onChange={handleStageChange}
+                        >
+                            <option value=""></option>
+                            <option value="Развитие">Развитие</option>
+                            <option value="Питание">Питание</option>
+                            <option value="Вымирание">Вымирание</option>
+                        </select>
+                    </div>
+                )}
+                {(Status != 0) && (
+                    <div>
+                        <h2>Кубик: {basketData?.moves.cube}</h2>
+                        <h2>Стадия: {basketData?.moves.stage}</h2>
+                    </div>
+                )}
 
                 <div className="basket-cards">
                     {basketData?.move_cards?.map((card) => (
@@ -101,40 +121,41 @@ export const BasketPage: FC = () => {
                                 <p className="description-b">{card.card.description}</p>
                             </div>
                             <div className="food-control">
-                                <button
+                                {!Status && (<button
                                     onClick={() => handleDecreaseFood(card.card.id || 0, card.food)}
                                     className="food-btn decrease-btn"
                                 >
                                     -
-                                </button>
+                                </button>)}
                                 <div className="circle-number">{card.food}</div>
-                                <button
+                                {!Status && (<button
                                     onClick={() => handleIncreaseFood(card.card.id || 0, card.food)}
                                     className="food-btn increase-btn"
                                 >
                                     +
-                                </button>
+                                </button>)}
                             </div>
-                            <button
+                            {!Status && (<button
                                 onClick={() => handleDeleteCard(card.card.id || 0)}
                                 className="delete-product-btn"
                             >
                                 Удалить
-                            </button>
+                            </button>)}
                         </div>
                     ))}
                 </div>
+
                 <div className="basket-summary">
-                    <Link to={ROUTES.HOME} className="no-underline">
-                        <div className="basket-actions">
-                            <button onClick={handleConfirm} className="action-btn confirm-btn">
+                    {!Status && (<Link to={ROUTES.HOME} className="no-underline">
+                    <div className="basket-actions">
+                            <button onClick={() => {handleConfirm()}} className="action-btn confirm-btn">
                                 Оформить заявку
                             </button>
                             <button onClick={handleDeleteBasket} className="action-btn delete-btn">
                                 Удалить заявку
                             </button>
                         </div>
-                    </Link>
+                    </Link>)}
                 </div>
             </div>
         </>

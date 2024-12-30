@@ -4,7 +4,7 @@ export const ROUTES = {
   REGISTER: "/register",
   AUTHORIZATION: "/auth",
   PROFILE: "/profile",
-  BASKET: "/basket",
+  BASKET: "/move",
   REQUESTS: "/requests"
 }
 export type RouteKeyType = keyof typeof ROUTES;

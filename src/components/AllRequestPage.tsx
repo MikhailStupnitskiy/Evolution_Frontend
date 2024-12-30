@@ -2,18 +2,37 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../modules/Routes";
 import { BreadCrumbs } from "../components/BreadCrumbs";
-import { api } from "../api";  // Путь к сгенерированному Api
+import { api } from "../api"; // Путь к сгенерированному Api
 import { HeaderUni } from "./HeaderUni";
 import "./AllRequestPage.css"; // Подключение стилей
 import { DsMoves } from "../api/Api";
+import { useNavigate } from "react-router-dom";
 
 export const AllRequestPage = () => {
     const [requests, setRequests] = useState<DsMoves[]>([]); // Стейт для хранения списка заявок
     const [loading, setLoading] = useState<boolean>(true); // Стейт для загрузки
     const [error, setError] = useState<string | null>(null); // Стейт для ошибки
 
+    const navigate = useNavigate();
+
     // Получаем токен из localStorage
     const token = localStorage.getItem('token');
+
+    const getStatusText = (status: number) => {
+        switch (status) {
+            case 0:
+                return "Черновик";
+            case 1:
+                return "Отправлен";
+            case 2:
+                return "Принят";
+            case 4:
+                return "Отклонен";
+            default:
+                return "Неизвестный статус";
+        }
+    };
+
 
     // Вызов API для получения заявок
     const fetchRequests = async () => {
@@ -63,7 +82,6 @@ export const AllRequestPage = () => {
 
     return (
         <div className="all-requests-page">
-            
             <div className="header-m">
                 <HeaderUni />
                 <div className="MP_breadcrumbs">
@@ -73,36 +91,31 @@ export const AllRequestPage = () => {
                 </div>
             </div> 
 
-            <div className="requests-table-container">
-                <h1>Список заявок</h1>
-                <table className="requests-table">
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Статус заявки</th>
-                            <th>Дата создания</th>
-                            <th>Дата обновления</th>
-                            <th>Дата завершения</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {requests.length > 0 ? (
-                            requests.map((request, index) => (
-                                <tr key={request.id}>
-                                    <td>{index + 1}</td>
-                                    <td>{request.status}</td>
-                                    <td>{formatDate(request.date_create!)}</td>
-                                    <td>{formatDate(request.date_update!)}</td>
-                                    <td>{request.date_finish === "0001-01-01T03:00:00+03:00" ? "Не завершена" : formatDate(request.date_finish!)}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan={5}>Заявки не найдены.</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+            <div className="requests-container">
+                <h2>Список ходов</h2>
+                {requests.length > 0 ? (
+                    requests.map((request, index) => (
+                        <div className="request-card" key={request.id}>
+                            <div className="request-info">
+                                <div className="request-index">{index + 1}</div>
+                                <h2 className="request-status">{getStatusText(request.status)}</h2>
+                                <div className="request-details">
+                                    <p>Дата создания: {formatDate(request.date_create!)}</p>
+                                    <p>Дата обновления: {formatDate(request.date_update!)}</p>
+                                    <p>Дата завершения: {request.date_finish === "0001-01-01T03:00:00+03:00" ? "Не завершена" : formatDate(request.date_finish!)}</p>
+                                </div>
+                                <div className="request-details">
+                                <p>Стадия: {request.stage}</p>
+                                <p>Кубик: {request.cube}</p>
+                                <p>Игрок: {localStorage.getItem("login")}</p>
+                                </div>
+                            </div>
+                            <button className="info-button"  onClick={() => navigate(`${ROUTES.BASKET}/${request.id}`)}>Подробнее</button>
+                        </div>
+                    ))
+                ) : (
+                    <p>Заявки не найдены.</p>
+                )}
             </div>
 
             <div className="actions">
