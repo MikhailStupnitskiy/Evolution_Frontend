@@ -122,6 +122,12 @@ button{
     font-family: 'Century Gothic', sans-serif;
 }
 
+.current-page{
+    font-size: 20px;
+    color: #F1F6E7; /* Цвет текста кнопки */
+    font-family: 'Century Gothic', sans-serif;
+}
+
 button:hover {
     background-color: #fff0f0;
 }
@@ -133,6 +139,13 @@ button:hover {
     margin-left: 0; 
     width: 100%;
 
+}
+
+.pagination{
+    margin-top: 10px;
+    background-color: #054D1A;
+    display: flex;
+    justify-content: center;
 }
 
 /* Стили для кнопки поиска */

@@ -43,28 +43,50 @@ export const getCardByID = async (
     }
 };
 
-export const getAllCards = async (): Promise<ApiResponseGetAllCards> => {
+export const getAllCards = async (
+    limit: number, 
+    offset: number
+): Promise<ApiResponseGetAllCards> => {
     try {
         const token = localStorage.getItem("token");
 
-        // Формируем параметры запроса
+        // Формируем заголовки
         const headers: HeadersInit = token
             ? { Authorization: `Bearer ${token}` }
             : {};
 
-        const response = await fetch(`/api/cards`, {
+        // Формируем URL с параметрами limit и offset
+        const url = `/api/cards?limit=${limit}&offset=${offset}`;
+
+        const response = await fetch(url, {
             method: "GET",
             headers, // Передаем заголовки
         });
 
+        if (!response.ok) {
+            throw new Error(`Ошибка API: ${response.status}`);
+        }
+
         const info = await response.json();
         console.log(info);
-        return { Cards: info["cards"], MoveID: info["move_ID"], CardsInMoveCount :info["count"] };
+        return {
+            Cards: info["cards"],
+            MoveID: info["move_ID"],
+            CardsInMoveCount: info["count"],
+        };
     } catch (error) {
-        console.error("Ошибка при получении данных из API, используем MOCK_DATA_PRODUCTS", error);
-        return { Cards: MOCK_DATA_CARDS.Cards, MoveID: 0, CardsInMoveCount: 0};
+        console.error(
+            "Ошибка при получении данных из API, используем MOCK_DATA_CARDS",
+            error
+        );
+        return {
+            Cards: MOCK_DATA_CARDS.Cards,
+            MoveID: 0,
+            CardsInMoveCount: 0,
+        };
     }
 };
+
 
 function toMove(moveData?: Record<string, any>): Move {
     return {

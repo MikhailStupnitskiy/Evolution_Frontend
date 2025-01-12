@@ -16,6 +16,10 @@ export const MainPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const cardsPerPage = 20; // Количество карт на страницу
+
+
     // Извлекаем данные из Redux
     const { cardName, filteredCards } = useSelector((state: RootState) => state.search);
     
@@ -31,6 +35,18 @@ export const MainPage = () => {
 
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem("token"));
     const [login, setLogin] = useState<string>(localStorage.getItem("login") || "");
+
+    const fetchCards = async (page: number) => {
+        try {
+            const offset = (page - 1) * cardsPerPage;
+            const response = await getAllCards(cardsPerPage, offset); // Передача limit и offset
+            setCards(response.Cards);
+            setCurrentPage(page);
+        } catch (error) {
+            console.error("Ошибка при загрузке карт:", error);
+        }
+    };
+
     
 
     useEffect(() => {
@@ -67,28 +83,17 @@ export const MainPage = () => {
     }, []);
 
     useEffect(() => {
-        const fetchCards = async () => {
-            try {
-                if (filteredCards.length >= 0 && cardName !== "") {
-                    setCards(filteredCards);
-                } else {
-                    const result = await getAllCards();
-                    setCards(result.Cards);
-                    setMoveID(result.MoveID);
-                    setCardsInMoveCount(result.CardsInMoveCount);
-                    console.log("result.MoveID:", result.MoveID);
-                }
-            } catch (error) {
-                console.error("Ошибка при загрузке карт:", error);
-            }
-        };
-
-        fetchCards();
-    }, [filteredCards]);
+        if (filteredCards && filteredCards.length > 0) {
+            setCards(filteredCards); // Используем сохраненные данные
+        } else {
+            fetchCards(currentPage); // Загружаем, если нет сохраненных данных
+        }
+    }, [filteredCards, currentPage]);
+    
 
     const checkAndUpdateMoveID = async () => {
         try {
-            const result = await getAllCards(); // Или другой API для обновления milkRequestID
+            const result = await getAllCards(cardsPerPage, (currentPage - 1)*cardsPerPage); // Или другой API для обновления milkRequestID
             setMoveID(result.MoveID);
             setCardsInMoveCount(result.CardsInMoveCount)
             
@@ -103,7 +108,7 @@ export const MainPage = () => {
         event.preventDefault();
         dispatch(setCardName(cardName));
 
-        if (cardName) {
+        if (cardName != "") {
             getCardsByName(cardName).then((result) => {
                 const cards = result.Cards || [];
                 setCards(cards);
@@ -113,16 +118,8 @@ export const MainPage = () => {
                 dispatch(setFilteredCards([]));
             });
         } else {
-            getAllCards().then((result) => {
-                const allCards = result.Cards || [];
-                setCards(allCards);
-                setMoveID(result.MoveID); // Сохраняем MoveID
-                dispatch(setFilteredCards(allCards));
-            }).catch(() => {
-                setCards([]);
-                setMoveID(0); // Устанавливаем в 0 в случае ошибки
-                dispatch(setFilteredCards([]));
-            });
+            setCards([]);
+            dispatch(setFilteredCards([]));
         }
     };
 
@@ -148,6 +145,7 @@ export const MainPage = () => {
                     />
                 </div>
             </div> 
+
             <div className="navigation_line">
                 <form onSubmit={onSubmitFinderHandler}> {/* Форма для поиска */}
                     <input className="search_field"
@@ -169,6 +167,23 @@ export const MainPage = () => {
                     </button>
                 </form>
             </div>
+
+            <div className="pagination">
+                <button
+                    disabled={currentPage === 1}
+                    onClick={() => fetchCards(currentPage - 1)}
+                >
+                    Предыдущая
+                </button>
+                <span className="current-page">Страница {currentPage}</span>
+                <button
+                    disabled={cards.length < cardsPerPage} // Если на текущей странице меньше карт, чем limit
+                    onClick={() => fetchCards(currentPage + 1)}
+                >
+                    Следующая
+                </button>
+            </div>
+
             <div className="container-main">
                 {Array.isArray(cards) && cards.map(card => (
                     <OneCard 
